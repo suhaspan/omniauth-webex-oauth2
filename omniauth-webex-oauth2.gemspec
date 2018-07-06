@@ -1,6 +1,5 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
-puts lib
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'omniauth/webex/version'
 
@@ -11,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['suhas0284@gmail.com']
 
   spec.summary       = %q{A Cisco WebEx Teams (Cisco Spark) OAuth2 strategy.}
-  spec.description   = %q{A Cisco WebEx Teams (Cisco Spark) OAuth2 strategy. Create account and generate client_id and client_secret.}
+  spec.description   = %q{A Cisco WebEx Teams (Cisco Spark) OAuth2 strategy. Create an account and generate client_id and client_secret.}
   spec.homepage      = 'https://github.com/suhaspan/omniauth-webex-oauth2'
   spec.license       = 'MIT'
 

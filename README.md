@@ -1,13 +1,14 @@
+[![Gem Version](https://badge.fury.io/rb/omniauth-webex-oauth2.svg)](https://badge.fury.io/rb/omniauth-webex-oauth2)
+
 # OmniAuth::Strategies::Webex
 
 OAuth2 Strategy for [Cisco WebEx Teams (Cisco Spark)](https://www.webex.com/products/teams/index.html)
 
 ## Installation
 
-Add this line to your application's Gemfile along with OmniAuth:
+Add this line to your application's Gemfile:
 
 ```ruby
-gem 'omniauth'
 gem 'omniauth-webex-oauth2'
 ```
 
