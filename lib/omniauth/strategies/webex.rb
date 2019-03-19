@@ -5,13 +5,26 @@ module OmniAuth
       option :name, 'webex'
 
       option :client_options, {
-        authorize_url: 'https://api.ciscospark.com/v1/authorize',
-        token_url: 'https://api.ciscospark.com/v1/access_token'
+        site: 'https://api.ciscospark.com/',
+        authorize_url: '/v1/authorize',
+        token_url: '/v1/access_token'
       }
+      uid { raw_info['id'] }
 
-      def authorize_params
-        options.authorize_params[:scope] = 'spark-compliance:memberships_read spark:all spark-compliance:memberships_write spark-admin:people_write spark-admin:roles_read spark-admin:organizations_read spark-compliance:events_read spark-compliance:rooms_read spark-compliance:team_memberships_read spark-compliance:messages_write spark:kms spark-compliance:team_memberships_write spark-compliance:teams_read spark-admin:licenses_read spark-compliance:messages_read spark-admin:people_read'
-        super
+      info do
+        {
+          name: raw_info['displayName'],
+          email: raw_info['emails'].try(:first),
+          nickname: raw_info['nickName'],
+          organization_id: raw_info['orgId'],
+          phone_numbers: raw_info['phoneNumbers']
+        }
+      end
+
+      extra do
+        {
+          raw_info: raw_info
+        }
       end
 
       def build_access_token
@@ -22,6 +35,14 @@ module OmniAuth
 
       def basic_auth_header
         'Basic '
+      end
+
+      def callback_url
+        ENV.fetch('WEBEX_REDIRECT_URI')
+      end
+
+      def raw_info
+        @raw_info ||= access_token.get('v1/people/me').parsed
       end
     end
   end
