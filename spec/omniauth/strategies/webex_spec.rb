@@ -9,8 +9,10 @@ describe OmniAuth::Strategies::Webex do
     end
   end
 
+  let(:options) { nil }
+
   subject do
-    OmniAuth::Strategies::Webex.new(app, 'appid', 'secret', @options || {}).tap do |strategy|
+    OmniAuth::Strategies::Webex.new(app, 'appid', 'secret', options || {}).tap do |strategy|
       allow(strategy).to receive(:request) {
         request
       }
@@ -59,5 +61,12 @@ describe OmniAuth::Strategies::Webex do
     it { expect(subject.access_token.expires_in).to eq(3600) }
     it { expect(subject.access_token.expires_at).to eq(12_345) }
     it { expect(subject.access_token.refresh_token).to eq('refresh_token') }
+  end
+
+  describe '#authorize_params' do
+    let(:options) { { scope: 'openid email spark:messages_write' } }
+
+    it { expect(subject.authorize_params.scope).to eq(options[:scope]) }
+    it { expect(subject.authorize_params.state).not_to be_nil }
   end
 end
